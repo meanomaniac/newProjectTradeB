@@ -1,0 +1,7 @@
+function readDB () {
+
+}
+
+function writeDB () {
+
+}

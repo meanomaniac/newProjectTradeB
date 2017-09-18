@@ -1,0 +1,33 @@
+Repeat all the following steps for each symbol in every exchange.
+Save all the following values/times as form of variables that you can alter to do multiple tests on.
+
+1
+  a) Start from the first (or n) tracking status (we will repeat the following few steps for every available subsequent tracking status)
+  b) Calculate the tracking status (TS) 15 mins from then (15 *2 = 30 with the 30 s time gap u are currently using).
+     If you cannot find the exact 15th min (n + 180 TS) look for +1 TS. If you still cant find look for -1TS. If you still
+     cant find it look for +2 TS and then -2TS. Repeat this until +-5 mins (+- 10 TS). If you cant find anything ignore it.
+  c) If you find the 15th or so minute, move to the next step (step 2) Then Repeat the above 2 steps for the next 15 min interval.
+    If you didn't find the 90+-15min in the previous step, then start step 1 a) over again starting from the next available timepoint
+    after Pt. A + 15 mins, i.e. start from the first available TS that is greater than  Pt A's TS + 30.
+
+2
+  a) get the difference between the last and the first point of the 15 min interval. The first point is Pt. A
+  b) If the difference is more than 5%, then move to next, else go back to step 1 and reset peak tracking
+  c) Repeat Step 1 until step 2 b) ceases to be more than 5%. This is Pt B.
+  d) If the difference between point Pt. A and Pt. B is more than 40%, move to next, else reset peak tracking. Steps 1 and 2
+    entail the peak find function. Make a similar dip finding function. This function that simply returns a 40 % peak or not
+    can be called by another function that runs on as a setInterval and calls steps 3 and 4; as well as by other functions in an
+    ad hoc manner as you will see in the following steps to get peaks when desired.
+    The set Interval function when finds a peak calls the 3rd step.
+
+3
+  a) check if at +3 hrs (+180 min or 360 TS - repeat step 1 b to get a close enough time
+  if needed) the price has stayed within margin of error (2%). This is Pt. C. If so move to next.
+  b) Go through each TS between Pt. B and Pt.C. They should stay within Margin of error (2%).
+    Two or three exceptions are ok (dip for a short time but coming back up is ok). Ensure the last few (like 10) TSs do not
+    include such dips/exceptions. If so move, initiate a buy and move to next.
+4
+  a) Start from the Pt C and repeat Steps 1 and 2 to find a peak more than 40%.
+  b) Continue step 4 a) and repeat this step until either the result is true or you reach
+    Pt. C + 24 hrs (+60*2*24 TSs)
+  c) If result of step 4 a) or 4 b) is true then initiate Sale at market price. This is Pt. D
